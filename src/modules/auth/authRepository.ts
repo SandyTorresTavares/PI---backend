@@ -3,7 +3,7 @@ import { ResultSetHeader } from "mysql2";
 
 export async function findUserByEmail(email: string){
     const[row]: any = await connection.query(
-        'SELECT * FROM user WHERE email = ?', [email]
+        'SELECT * FROM users WHERE email = ?', [email]
     );
     return row.length ? row [0] : null;
 }
@@ -12,7 +12,7 @@ export async function createUser(user: {name: string, email: string, password: s
 
     const {name, email, password, role = 'aluno'} = user;
     const [result] = await connection.query<ResultSetHeader>(
-        'INSERT INTO user (name, email, password, role) VALUES (?, ?, ?, ?)', [name, email, password, role]
+        'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', [name, email, password, role]
     );
 
     return;
