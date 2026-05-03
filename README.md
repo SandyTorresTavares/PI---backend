@@ -1,6 +1,14 @@
-# 🚀 API Express com TypeScript
+# 🚀 API REST com Express, TypeScript e MySQL
 
-API RESTful construída com Node.js, Express e TypeScript. Inclui autenticação com JWT, hash de senha com bcrypt e integração com MySQL.
+Este projeto consiste no desenvolvimento de uma API REST utilizando Node.js, Express e TypeScript, com integração a banco de dados MySQL.
+
+O objetivo é aplicar conceitos fundamentais de desenvolvimento web, incluindo:
+- criação de rotas e controllers  
+- organização em camadas (controller, service, repository)  
+- autenticação com JWT  
+- persistência de dados em banco relacional  
+- uso de variáveis de ambiente  
+- controle de versão com Git  
 
 ---
 
@@ -9,7 +17,6 @@ API RESTful construída com Node.js, Express e TypeScript. Inclui autenticação
 ```bash
 npm install
 cp .env.example .env
-npm run setup
 npm run dev
 ```
 
@@ -18,8 +25,9 @@ npm run dev
 ## 📋 Funcionalidades
 
 - Registro de usuários  
-- Login de usuários  
-- Perfil do usuário (protegido por autenticação)  
+- Login com geração de token JWT  
+- Autenticação via middleware  
+- Consulta de perfil do usuário autenticado  
 - Integração com banco de dados MySQL  
 
 ---
@@ -75,7 +83,7 @@ JWT_SECRET=sua_chave_secreta_jwt
 Execute o comando:
 
 ```bash
-npm run setup
+npm run migration:run
 ```
 
 Esse script irá automaticamente criar o banco de dados (caso não exista) e criar as tabelas necessárias.
@@ -111,9 +119,13 @@ O servidor será iniciado na porta definida no `.env`.
 src/
   app.ts
   server.ts
-  controllers/
-  routes/
-  services/
+  modules/
+    auth/
+      auth.controller.ts
+      auth.service.ts
+      auth.repository.ts
+    user/
+      user.controller.ts
   middleware/
   database/
 
@@ -131,7 +143,7 @@ Erro de conexão com o banco:
 - Verifique usuário e senha no `.env`  
 
 Erro "Unknown database":
-- O comando `npm run setup` deve resolver automaticamente  
+- O comando `npm run migration:run` deve resolver automaticamente  
 
 ---
 
@@ -145,3 +157,9 @@ Erro "Unknown database":
 - dotenv  
 
 ---
+
+## 🎯 Conclusão
+
+O projeto demonstra de forma prática a aplicação dos principais conceitos de desenvolvimento backend, incluindo integração com banco de dados, autenticação segura com JWT e organização em camadas.
+
+A estrutura modular adotada facilita a manutenção e evolução do sistema, permitindo a adição de novas funcionalidades de forma organizada, ao mesmo tempo em que atende aos requisitos propostos para o desenvolvimento de um software web com controle de versão e persistência de dados.
