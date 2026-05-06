@@ -31,9 +31,9 @@ export const getTasksForStudent = async (studentId: number, page: number = 1, pe
     const params: any[] = [studentId];
 
     if (completed === false) {
-        sql += ' WHERE tp.completed = 0 OR tp.completed IS NULL';
+        sql += ' WHERE tp.completed = FALSE';
     } else if (completed === true) {
-        sql += ' WHERE tp.completed = 1';
+        sql += ' WHERE tp.completed = TRUE';
     }
 
     sql += ` LIMIT ${perPage} OFFSET ${offset}`;
@@ -78,5 +78,22 @@ export const deleteTask = async (taskId: number, userId: number) => {
     await connection.execute(
         'DELETE FROM tasks WHERE id = ?',
         [taskId]
+    );
+};
+
+export const updateTaskStatus = async (taskId: number, userId: number, completed: boolean) => {
+    const [existingTask]: any = await connection.execute(
+        'SELECT id FROM tasks WHERE id = ?',
+        [taskId]
+    );
+    if (existingTask.length === 0) {
+        throw new Error('Tarefa não encontrada');
+    }
+
+    await connection.execute(
+        `INSERT INTO task_progress (user_id, task_id, completed)
+         VALUES (?, ?, ?)
+         ON DUPLICATE KEY UPDATE completed = VALUES(completed), updated_at = CURRENT_TIMESTAMP`,
+        [userId, taskId, completed]
     );
 };
