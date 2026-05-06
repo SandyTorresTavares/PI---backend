@@ -53,3 +53,7 @@ export const deleteTask = async (taskId: number, user: User) => {
     }
     return await taskRepository.deleteTask(taskId, user.userId);
 };
+
+export const updateTaskStatus = async (taskId: number, userId: number, completed: boolean) => {
+    return await taskRepository.updateTaskStatus(taskId, userId, completed);
+};

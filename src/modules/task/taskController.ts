@@ -88,4 +88,26 @@ const deleteTask = async (req: Request, res: Response) => {
     }
 }
 
-export { createTask, getTasks, updateTask, deleteTask };
+const updateTaskStatus = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    const user = (req as any).user;
+
+    if (user.role !== 'aluno') {
+        return res.status(403).json({ error: 'Apenas alunos podem marcar tarefas como concluídas' });
+    }
+
+    if (typeof completed !== 'boolean') {
+        return res.status(400).json({ error: 'completed deve ser true ou false' });
+    }
+
+    try {
+        await taskService.updateTaskStatus(parseInt(id), user.userId, completed);
+        return res.status(200).json({ message: `Tarefa marcada como ${completed ? 'concluída' : 'pendente'}` });
+    } catch (error: any) {
+        return res.status(400).json({ message: error.message });
+    }
+}
+
+export { createTask, getTasks, updateTask, deleteTask, updateTaskStatus };
