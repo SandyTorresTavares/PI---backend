@@ -86,6 +86,16 @@ Todas as rotas de tarefa exigem autenticação com JWT via header `Authorization
   - `403` se o usuário não for professor.
   - `400` se a tarefa não for encontrada ou o criador for diferente.
 
+### PUT /tasks/:taskId/progress
+- Descrição: atualiza uma tarefa existente para feito.
+- Permissão: apenas `aluno` podem alterar o status.
+- Requer params: 
+  - `id` (ID da tarefa)
+- Requer body:
+  - `complete` (boolean)
+- Retorno:
+- `200` em caso de sucesso: `{ message: "Tarefa marcada como concluída" }`
+
 ### DELETE /tasks/:id
 - Descrição: deleta uma tarefa.
 - Permissão: apenas `professor` (criador da tarefa).

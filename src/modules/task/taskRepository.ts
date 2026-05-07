@@ -31,7 +31,7 @@ export const getTasksForStudent = async (studentId: number, page: number = 1, pe
     const params: any[] = [studentId];
 
     if (completed === false) {
-        sql += ' WHERE tp.completed = FALSE';
+        sql += ' WHERE (tp.completed = FALSE OR tp.completed IS NULL)';
     } else if (completed === true) {
         sql += ' WHERE tp.completed = TRUE';
     }
