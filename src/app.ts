@@ -6,7 +6,10 @@ import taskRouter from './routes/taskRouter';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://sandytorrestavares.github.io'
+  ],
   credentials: true
 }));
 app.use(express.json());
