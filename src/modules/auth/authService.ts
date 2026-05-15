@@ -48,7 +48,7 @@ export async function login(data: Omit<RegisterData, 'name'>) {
             userId: user.id,
             email: user.email,
             role: user.role,
-            name: user.name // Adicionado para incluir o nome no token
+            name: user.name
         },
         process.env.JWT_SECRET as string,
         { expiresIn: '1h' }
